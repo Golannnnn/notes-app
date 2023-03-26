@@ -1,9 +1,39 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  margin: 20px 5px 30px 5px;
+  font-size: 3rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(38, 38, 38);
+}
+
 form {
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  max-width: 350px;
+  margin-bottom: 20px;
 }
 
 form > :first-child {
   margin-bottom: 10px;
+}
+
+.results-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.results-container > span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
 }
