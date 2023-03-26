@@ -16,7 +16,7 @@ const Form = ({ input, handleChange, addNote }) => {
         }}
       />
       <Button onClick={addNote} variant="contained">
-        Add note
+        Add new note
       </Button>
     </form>
   );
