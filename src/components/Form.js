@@ -1,17 +1,7 @@
-import { useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 const Form = ({ input, handleChange, handleSubmit }) => {
-  // const submit = input.submit;
-
-  // const useFirstRender = () => {
-  //   const ref = useRef(true);
-  //   const firstRender = ref.current;
-  //   ref.current = false;
-  //   return firstRender;
-  // };
-
   return (
     <form onSubmit={handleSubmit}>
       <TextField
