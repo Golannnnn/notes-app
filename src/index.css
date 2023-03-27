@@ -27,7 +27,8 @@ form {
   margin-bottom: 20px;
 }
 
-form > :first-child {
+form > :first-child,
+form > :nth-child(2) {
   margin-bottom: 10px;
 }
 
@@ -38,6 +39,9 @@ form > :first-child {
 }
 
 .note {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;

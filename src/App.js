@@ -5,15 +5,39 @@ import Results from "./components/Results";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState({
+    title: "",
+    content: "",
+    error: "",
+  });
 
   const handleChange = (event) => {
-    setInput(event.target.value);
+    setInput((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (input.content === "") {
+      setInput((prev) => ({
+        ...prev,
+        error: "Can't be empty",
+      }));
+    } else {
+      setInput((prev) => ({
+        ...prev,
+        error: "",
+      }));
+      addNote();
+    }
   };
 
   const addNote = () => {
     const noteObj = {
-      content: input,
+      title: input.title,
+      content: input.content,
       date: new Date(),
       id: nanoid(),
     };
@@ -29,7 +53,11 @@ function App() {
   return (
     <div className="app">
       <h1 className="title">Notes app</h1>
-      <Form value={input} handleChange={handleChange} addNote={addNote} />
+      <Form
+        input={input}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
       <Results notes={notes} deleteNote={deleteNote} />
     </div>
   );

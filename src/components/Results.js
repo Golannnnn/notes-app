@@ -4,6 +4,7 @@ const Results = ({ notes, deleteNote }) => {
   const result = notes.map((n) => (
     <Note
       key={n.id}
+      title={n.title}
       content={n.content}
       date={n.date}
       id={n.id}
