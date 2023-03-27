@@ -1,3 +1,11 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -29,11 +37,17 @@ form > :first-child {
   flex-wrap: wrap;
 }
 
-.results-container > span {
-  font-size: 1.5rem;
-  font-weight: bold;
+.note {
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
+}
+
+.note > *:not(button) {
+  margin-bottom: 10px;
+}
+
+.note > button {
+  padding: 5px 10px;
 }
