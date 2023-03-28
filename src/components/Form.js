@@ -18,7 +18,7 @@ const Form = ({ input, handleChange, handleSubmit }) => {
         label="Content"
         multiline
         minRows={1}
-        maxRows={10}
+        maxRows={8}
         value={input.content}
         onChange={handleChange}
         sx={{
