@@ -6,9 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const Note = ({ title, content, date, id, deleteNote, handleOpen }) => {
-  const formattedDate = format(new Date(date), "MMM do p");
-
+const Note = ({ title, content, date, update, id, deleteNote, handleOpen }) => {
   return (
     <>
       <Card
@@ -16,15 +14,25 @@ const Note = ({ title, content, date, id, deleteNote, handleOpen }) => {
         sx={{
           minWidth: { xs: "100%", sm: 275 },
           maxWidth: { sm: 300, md: 300, lg: 300, xl: 300 },
+          backgroundColor: "#feff9c",
         }}
       >
         <CardContent
           onClick={() => handleOpen(id)}
           style={{ cursor: "pointer" }}
         >
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {formattedDate}
+          <Typography sx={{ fontSize: 13 }} color="text.secondary" gutterBottom>
+            Created: {format(new Date(date), "MMM do p")}
           </Typography>
+          {update && (
+            <Typography
+              sx={{ fontSize: 12, mb: 1 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Updated: {format(new Date(update), "MMM do p")}
+            </Typography>
+          )}
           <Typography sx={{ mb: 1 }} variant="h5" component="div">
             {title}
           </Typography>

@@ -27,11 +27,6 @@ form {
   margin-bottom: 20px;
 }
 
-form > :first-child,
-form > :nth-child(2) {
-  margin-bottom: 10px;
-}
-
 .results-container {
   display: flex;
   justify-content: center;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Note from "./Note";
 import NoteModal from "./NoteModal";
 
-const Results = ({ notes, deleteNote }) => {
+const Results = ({ notes, setNotes, deleteNote }) => {
   const [openModal, setOpenModal] = useState({
     id: null,
     open: false,
@@ -30,6 +30,7 @@ const Results = ({ notes, deleteNote }) => {
       title={n.title}
       content={n.content}
       date={n.date}
+      update={n.update && n.update}
       id={n.id}
       deleteNote={deleteNote}
       handleOpen={handleOpen}
@@ -44,6 +45,7 @@ const Results = ({ notes, deleteNote }) => {
           openModal={openModal}
           handleClose={handleClose}
           notes={notes}
+          setNotes={setNotes}
         />
       )}
     </div>
