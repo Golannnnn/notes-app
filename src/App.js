@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import Results from "./components/Results";
 
@@ -13,9 +13,20 @@ import Results from "./components/Results";
 function App() {
   const [notes, setNotes] = useState([]);
 
+  useEffect(() => {
+    notes.length !== 0 && localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    const localNotes = JSON.parse(localStorage.getItem("notes"));
+    localNotes && setNotes(localNotes);
+  }, []);
+
   const deleteNote = (id) => {
     if (window.confirm("Are you sure you want to delete your note?")) {
-      setNotes(notes.filter((n) => n.id !== id));
+      const filteredNotes = notes.filter((n) => n.id !== id);
+      localStorage.setItem("notes", JSON.stringify(filteredNotes));
+      setNotes(filteredNotes);
     }
   };
 
