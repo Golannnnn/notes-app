@@ -15,6 +15,9 @@ const Note = ({ title, content, date, update, id, deleteNote, handleOpen }) => {
           minWidth: { xs: "100%", sm: 275 },
           maxWidth: { sm: 300, md: 300, lg: 300, xl: 300 },
           backgroundColor: "#feff9c",
+          ":hover": {
+            boxShadow: 5,
+          },
         }}
       >
         <CardContent

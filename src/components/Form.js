@@ -3,6 +3,8 @@ import { nanoid } from "nanoid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import SendIcon from "@mui/icons-material/Send";
 
 const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
   const [input, setInput] = useState({
@@ -74,6 +76,24 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
     );
   };
 
+  const SearchButton = () => (
+    <IconButton
+      style={{
+        dislay: "flex",
+        alignSelf: "end",
+        backgroundColor: "rgb(144, 202, 249)",
+        paddingLeft: 11,
+        marginLeft: 10,
+      }}
+    >
+      <SendIcon
+        style={{
+          color: "rgba(0, 0, 0, 0.87)",
+        }}
+      />
+    </IconButton>
+  );
+
   return (
     <form onSubmit={handleSubmit}>
       {openModal && (
@@ -108,8 +128,14 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
         }}
         error={!!input.error}
         helperText={input.error}
+        // InputProps={{ endAdornment: <SearchButton /> }}
       />
-      <Button type="submit" variant="contained" sx={{ mb: -2 }}>
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ mb: -2 }}
+        // style={{ backgroundColor: "#9D9CFF" }}
+      >
         {openModal ? "Update note" : "Add new note"}
       </Button>
     </form>
