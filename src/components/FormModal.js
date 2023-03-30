@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Form from "./Form";
 
-const NoteModal = ({ openModal, handleClose, notes, setNotes }) => {
+const FormModal = ({ notes, setNotes, openModal, handleClose }) => {
   const filteredNotes = notes.filter((n) => n.id === openModal.id);
   const [noteObj] = filteredNotes;
 
@@ -32,8 +32,8 @@ const NoteModal = ({ openModal, handleClose, notes, setNotes }) => {
       <Card sx={style}>
         <CardContent>
           <IconButton
-            aria-label="close"
             onClick={handleClose}
+            aria-label="close"
             sx={{
               position: "absolute",
               right: 8,
@@ -43,13 +43,12 @@ const NoteModal = ({ openModal, handleClose, notes, setNotes }) => {
           >
             <CloseIcon />
           </IconButton>
-
           <Form
             notes={notes}
             setNotes={setNotes}
             openModal={openModal}
-            noteObj={noteObj}
             handleClose={handleClose}
+            noteObj={noteObj}
           />
         </CardContent>
       </Card>
@@ -57,4 +56,4 @@ const NoteModal = ({ openModal, handleClose, notes, setNotes }) => {
   );
 };
 
-export default NoteModal;
+export default FormModal;

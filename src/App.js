@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import Form from "./components/Form";
+import Header from "./components/Header";
 import Results from "./components/Results";
+import FormModal from "./components/FormModal";
+import { ConfirmProvider } from "material-ui-confirm";
 
 /**
  * 1. Identify your component’s different visual states
@@ -12,6 +14,10 @@ import Results from "./components/Results";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [openModal, setOpenModal] = useState({
+    id: null,
+    open: false,
+  });
 
   useEffect(() => {
     notes.length !== 0 && localStorage.setItem("notes", JSON.stringify(notes));
@@ -22,20 +28,41 @@ function App() {
     localNotes && setNotes(localNotes);
   }, []);
 
-  const deleteNote = (id) => {
-    if (window.confirm("Are you sure you want to delete your note?")) {
-      const filteredNotes = notes.filter((n) => n.id !== id);
-      localStorage.setItem("notes", JSON.stringify(filteredNotes));
-      setNotes(filteredNotes);
-    }
+  const handleOpen = (id) => {
+    setOpenModal({
+      id: id,
+      open: true,
+    });
+  };
+
+  const handleClose = () => {
+    setOpenModal((prev) => {
+      return {
+        ...prev,
+        open: false,
+      };
+    });
   };
 
   return (
-    <div className="app">
-      <h1 className="title">Notes app</h1>
-      <Form notes={notes} setNotes={setNotes} />
-      <Results notes={notes} setNotes={setNotes} deleteNote={deleteNote} />
-    </div>
+    <>
+      <Header handleOpen={handleOpen} />
+      <ConfirmProvider>
+        <Results
+          notes={notes}
+          setNotes={setNotes}
+          openModal={openModal}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+        />
+      </ConfirmProvider>
+      <FormModal
+        notes={notes}
+        setNotes={setNotes}
+        openModal={openModal}
+        handleClose={handleClose}
+      />
+    </>
   );
 }
 

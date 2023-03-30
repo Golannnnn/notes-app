@@ -3,10 +3,8 @@ import { nanoid } from "nanoid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import SendIcon from "@mui/icons-material/Send";
 
-const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
+const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
   const [input, setInput] = useState({
     title: noteObj ? noteObj.title : "",
     content: noteObj ? noteObj.content : "",
@@ -40,11 +38,12 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
         ...prev,
         error: "",
       }));
-      if (openModal) {
+      if (openModal.id) {
         changeNote();
         handleClose();
       } else {
         addNote();
+        handleClose();
       }
     }
   };
@@ -55,6 +54,7 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
       content: input.content,
       date: new Date(),
       id: nanoid(),
+      archived: false,
     };
     setNotes(notes.concat(noteObj));
   };
@@ -62,43 +62,34 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
   const changeNote = () => {
     setNotes(
       notes.map((n) => {
-        if (n.id === openModal.id) {
-          return {
-            ...n,
-            title: input.title,
-            content: input.content,
-            update: new Date(),
-          };
-        } else {
-          return n;
-        }
+        return n.id === openModal.id
+          ? {
+              ...n,
+              title: input.title,
+              content: input.content,
+              update: new Date(),
+            }
+          : n;
       })
     );
   };
 
-  const SearchButton = () => (
-    <IconButton
-      style={{
-        dislay: "flex",
-        alignSelf: "end",
-        backgroundColor: "rgb(144, 202, 249)",
-        paddingLeft: 11,
-        marginLeft: 10,
-      }}
-    >
-      <SendIcon
-        style={{
-          color: "rgba(0, 0, 0, 0.87)",
-        }}
-      />
-    </IconButton>
-  );
+  const styles = {
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: "350px",
+    marginBottom: "20px",
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form style={styles} onSubmit={handleSubmit}>
       {openModal && (
-        <Typography sx={{ mb: 2 }} variant="h5" component="div">
-          Edit my note
+        <Typography
+          sx={{ mb: 2, fontWeight: 600 }}
+          variant="h5"
+          component="div"
+        >
+          {!openModal.id ? "Add new note" : "Edit note"}
         </Typography>
       )}
       <TextField
@@ -109,9 +100,6 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
         size="small"
         value={input.title}
         onChange={handleChange}
-        // sx={{
-        //   mt: openModal && 5,
-        // }}
         sx={{ mb: 2 }}
       />
       <TextField
@@ -123,20 +111,14 @@ const Form = ({ notes, setNotes, openModal, noteObj, handleClose }) => {
         value={input.content}
         onChange={handleChange}
         sx={{
-          width: openModal ? "100%" : 300,
+          width: "100%",
           mb: 2,
         }}
         error={!!input.error}
         helperText={input.error}
-        // InputProps={{ endAdornment: <SearchButton /> }}
       />
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{ mb: -2 }}
-        // style={{ backgroundColor: "#9D9CFF" }}
-      >
-        {openModal ? "Update note" : "Add new note"}
+      <Button type="submit" variant="contained" sx={{ mb: -2 }}>
+        {!openModal.id ? "Add new note" : "Update note"}
       </Button>
     </form>
   );
