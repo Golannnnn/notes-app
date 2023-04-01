@@ -13,7 +13,7 @@ const FormModal = ({ notes, setNotes, openModal, handleClose }) => {
     position: "absolute",
     top: "50%",
     left: "50%",
-    width: 340,
+    width: 330,
     transform: "translate(-50%, -50%)",
     bgcolor: "background.paper",
     borderRadius: 1,

@@ -37,35 +37,21 @@ const Results = ({ notes, setNotes, handleOpen }) => {
     setNotes(copy);
   };
 
-  const activeNotes = notes.map(
-    (n) =>
-      !n.archived && (
-        <Note
-          key={n.id}
-          id={n.id}
-          notes={notes}
-          deleteNote={deleteNote}
-          archiveNote={archiveNote}
-          moveNote={moveNote}
-          handleOpen={handleOpen}
-        />
-      )
-  );
+  const noteProps = {
+    notes,
+    deleteNote,
+    archiveNote,
+    moveNote,
+    handleOpen,
+  };
 
-  const archivedNotes = notes.map(
-    (n) =>
-      n.archived && (
-        <Note
-          key={n.id}
-          id={n.id}
-          notes={notes}
-          deleteNote={deleteNote}
-          archiveNote={archiveNote}
-          moveNote={moveNote}
-          handleOpen={handleOpen}
-        />
-      )
-  );
+  const activeNotes = notes
+    .filter((n) => !n.archived)
+    .map((n) => <Note key={n.id} id={n.id} {...noteProps} />);
+
+  const archivedNotes = notes
+    .filter((n) => n.archived)
+    .map((n) => <Note key={n.id} id={n.id} {...noteProps} />);
 
   const styles = {
     display: "flex",

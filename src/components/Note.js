@@ -20,7 +20,7 @@ const Note = ({ id, notes, deleteNote, archiveNote, moveNote, handleOpen }) => {
         sx={{
           minWidth: { xs: "100%", sm: 275 },
           maxWidth: { sm: 300, md: 300, lg: 300, xl: 300 },
-          backgroundColor: noteObj.archived ? "#1111" : "#feff9c",
+          backgroundColor: noteObj.archived ? "#1111" : "#f5e0cc",
           ":hover": {
             boxShadow: 5,
           },
@@ -60,6 +60,8 @@ const Note = ({ id, notes, deleteNote, archiveNote, moveNote, handleOpen }) => {
                   mt: 0.5,
                   textDecoration: noteObj.archived ? "line-through" : "none",
                   wordBreak: "break-word",
+                  color: "#bc2f2c",
+                  fontWeight: 600,
                 }}
                 variant="h5"
                 component="div"
@@ -100,6 +102,7 @@ const Note = ({ id, notes, deleteNote, archiveNote, moveNote, handleOpen }) => {
               textDecoration: noteObj.archived ? "line-through" : "none",
               wordBreak: "break-word",
               whiteSpace: "pre-line",
+              fontWeight: 600,
             }}
           >
             {noteObj.content}

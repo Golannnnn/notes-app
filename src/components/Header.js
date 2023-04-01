@@ -8,26 +8,42 @@ import AddIcon from "@mui/icons-material/Add";
 const Header = ({ handleOpen }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "white" }}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "#fcf7f1;",
+          boxShadow: "none",
+          borderBottom: "0.5px solid darkgrey",
+          padding: 1,
+        }}
+      >
         <Toolbar>
           <Typography
-            variant="h6"
+            variant="h1"
             component="div"
             sx={{
               flexGrow: 1,
-              color: "black",
+              color: "#cf2e2e",
               fontSize: "1.5rem",
               fontWeight: 600,
             }}
             // style={{ color: "black", fontSize: "1.5rem", fontWeight: 600 }}
           >
-            Notes app
+            notes app
           </Typography>
           <Button
+            variant="outlined"
             type="submit"
-            variant="contained"
             startIcon={<AddIcon />}
             onClick={() => handleOpen(null)}
+            style={{
+              fontWeight: 500,
+              backgroundColor: "#003e52",
+              borderColor: "#003e52",
+              color: "white",
+              paddingRight: 20,
+              paddingLeft: 20,
+            }}
           >
             Add note
           </Button>

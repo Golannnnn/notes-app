@@ -3,27 +3,75 @@ import { nanoid } from "nanoid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import PickTime from "./PickTime";
 
 const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
+  const [remind, setRemind] = useState(false);
   const [input, setInput] = useState({
     title: noteObj ? noteObj.title : "",
     content: noteObj ? noteObj.content : "",
+    reminder: noteObj
+      ? noteObj.reminder instanceof Date
+        ? noteObj.reminder
+        : new Date()
+      : new Date(),
     error: "",
   });
+  const [dateError, setDateError] = useState({
+    error: false,
+    message: "Time has past already",
+  });
+
+  const toggleCheckbox = () => {
+    setRemind((prev) => !prev);
+    if (new Date(input.reminder) - Date.now() <= 0) {
+      setDateError((prev) => {
+        return {
+          ...prev,
+          error: true,
+        };
+      });
+    }
+  };
 
   const handleChange = (event) => {
-    if (event.target.name === "content") {
-      if (event.target.value !== "") {
-        setInput((prev) => ({
-          ...prev,
-          error: "",
-        }));
+    if (event instanceof Date) {
+      if (new Date(event) - Date.now() <= 0) {
+        setDateError((prev) => {
+          return {
+            ...prev,
+            error: true,
+          };
+        });
+      } else {
+        setDateError((prev) => {
+          return {
+            ...prev,
+            error: false,
+          };
+        });
       }
+
+      setInput((prev) => ({
+        ...prev,
+        reminder: new Date(event),
+      }));
+    } else {
+      if (event.target.name === "content") {
+        if (event.target.value !== "") {
+          setInput((prev) => ({
+            ...prev,
+            error: "",
+          }));
+        }
+      }
+      setInput((prev) => ({
+        ...prev,
+        [event.target.name]: event.target.value,
+      }));
     }
-    setInput((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
   };
 
   const handleSubmit = (event) => {
@@ -33,7 +81,7 @@ const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
         ...prev,
         error: "Can't be empty",
       }));
-    } else {
+    } else if (!remind || !dateError.error) {
       setInput((prev) => ({
         ...prev,
         error: "",
@@ -55,6 +103,7 @@ const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
       date: new Date(),
       id: nanoid(),
       archived: false,
+      reminder: remind ? input.reminder : remind,
     };
     setNotes(notes.concat(noteObj));
   };
@@ -68,6 +117,7 @@ const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
               title: input.title,
               content: input.content,
               update: new Date(),
+              reminder: input.reminder,
             }
           : n;
       })
@@ -88,6 +138,7 @@ const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
           sx={{ mb: 2, fontWeight: 600 }}
           variant="h5"
           component="div"
+          color="#565656"
         >
           {!openModal.id ? "Add new note" : "Edit note"}
         </Typography>
@@ -117,8 +168,44 @@ const Form = ({ notes, setNotes, openModal, handleClose, noteObj }) => {
         error={!!input.error}
         helperText={input.error}
       />
-      <Button type="submit" variant="contained" sx={{ mb: -2 }}>
-        {!openModal.id ? "Add new note" : "Update note"}
+
+      <FormControlLabel
+        sx={{ mb: 2 }}
+        control={
+          <Checkbox
+            label="Remind"
+            checked={remind}
+            onChange={toggleCheckbox}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        }
+        label="Create a reminder"
+      />
+
+      {remind && (
+        <>
+          <PickTime
+            value={input.reminder}
+            handleChange={handleChange}
+            dateError={dateError}
+            setDateError={setDateError}
+          />
+          {dateError.error && (
+            <Typography
+              sx={{ mt: -1.5, ml: 2, fontSize: 13, color: "#d32f2f" }}
+            >
+              {dateError.message}
+            </Typography>
+          )}
+        </>
+      )}
+
+      <Button
+        type="submit"
+        variant="outlined"
+        sx={{ mb: -2, alignSelf: "flex-end" }}
+      >
+        Submit
       </Button>
     </form>
   );
