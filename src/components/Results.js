@@ -56,7 +56,7 @@ const Results = ({ notes, setNotes, handleOpen }) => {
   const styles = {
     display: "flex",
     flexWrap: "wrap",
-    margin: "20px 20px 10px 10px",
+    margin: "20px 30px 10px 10px",
   };
 
   return (

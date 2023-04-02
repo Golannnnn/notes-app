@@ -18,16 +18,16 @@ const Note = ({ id, notes, deleteNote, archiveNote, moveNote, handleOpen }) => {
     <>
       <Card
         sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          margin: "10px",
           minWidth: { xs: "100%", sm: 275 },
           maxWidth: { sm: 300, md: 300, lg: 300, xl: 300 },
           backgroundColor: noteObj.archived ? "#1111" : "#f5e0cc",
           ":hover": {
             boxShadow: 5,
           },
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          margin: "10px",
         }}
       >
         <CardContent>
